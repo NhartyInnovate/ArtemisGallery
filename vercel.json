@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "routes": [
+    { "src": "/style.css", "dest": "/style.css" },
+    { "src": "/(.*)", "dest": "api/index.py" }
+  ]
+}

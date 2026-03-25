@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artemis | Fine Art Archive</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+</head>
+<body>
+
+    <header class="hero">
+        <h1>Artemis</h1>
+        <p>A Digital Archive of Fine Art</p>
+    </header>
+
+    <section class="search-section">
+        <form action="/" method="GET" class="glass-form">
+            <input type="text" name="q" class="premium-input" placeholder="Search artists, titles, or periods..." value="{{ search_query }}">
+
+            <select name="type" class="premium-select">
+                <option value="">All Art Types</option>
+                <option value="Painting" {% if selected_type == 'Painting' %}selected{% endif %}>Painting</option>
+                <option value="Sculpture" {% if selected_type == 'Sculpture' %}selected{% endif %}>Sculpture</option>
+                <option value="Print" {% if selected_type == 'Print' %}selected{% endif %}>Print</option>
+                <option value="Photograph" {% if selected_type == 'Photograph' %}selected{% endif %}>Photograph</option>
+            </select>
+
+            <button type="submit" class="premium-btn">Explore</button>
+        </form>
+    </section>
+
+    <main class="masonry-container">
+        {% for art in artworks %}
+        <article class="art-card"
+                 data-title="{{ art.title }}"
+                 data-artist="{{ art.artist }}"
+                 data-date="{{ art.date }}"
+                 data-medium="{{ art.medium }}"
+                 data-image="{{ art.image_url }}"
+                 onclick="openDrawer(this)">
+
+            <img src="{{ art.image_url }}" alt="{{ art.title }}" class="art-img" loading="lazy">
+            <div class="art-info">
+                <h3 class="art-title">{{ art.title }}</h3>
+                <p class="art-artist">{{ art.artist }}</p>
+                <p class="art-meta">{{ art.date }} &bull; {{ art.medium | truncate(45) }}</p>
+            </div>
+        </article>
+        {% endfor %}
+    </main>
+
+<div class="pagination-container">
+
+        {% if current_page > 1 %}
+            <a href="/?q={{ search_query }}&type={{ selected_type }}&page={{ current_page - 1 }}" class="premium-btn">&laquo; Previous</a>
+        {% else %}
+            <span class="premium-btn disabled">&laquo; Previous</span>
+        {% endif %}
+
+        <span class="page-indicator">Page {{ current_page }} of {{ total_pages }}</span>
+
+        {% if current_page < total_pages %}
+            <a href="/?q={{ search_query }}&type={{ selected_type }}&page={{ current_page + 1 }}" class="premium-btn">Next &raquo;</a>
+        {% else %}
+            <span class="premium-btn disabled">Next &raquo;</span>
+        {% endif %}
+
+    </div>
+<div class="drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer()"></div>
+
+    <aside class="detail-drawer" id="detailDrawer">
+        <button class="close-btn" onclick="closeDrawer()">&times;</button>
+
+        <div class="drawer-inner">
+            <img src="" id="drawerImg" alt="Artwork" class="drawer-hero-img">
+
+            <div class="drawer-body">
+                <h2 id="drawerTitle" class="art-title" style="font-size: 1.5rem;">Title</h2>
+                <h4 id="drawerArtist" class="art-artist" style="font-size: 1.1rem; margin-bottom: 2rem;">Artist</h4>
+
+                <div class="meta-row">
+                    <span class="meta-label">Creation Date</span>
+                    <p id="drawerDate" class="meta-value">Date</p>
+                </div>
+
+                <div class="meta-row">
+                    <span class="meta-label">Physical Medium</span>
+                    <p id="drawerMedium" class="meta-value">Medium</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <script>
+        const drawer = document.getElementById('detailDrawer');
+        const backdrop = document.getElementById('drawerBackdrop');
+        const body = document.body;
+
+        function openDrawer(card) {
+            // 1. Grab the data from the clicked card
+            const data = card.dataset;
+
+            // 2. Inject the data into the drawer
+            document.getElementById('drawerTitle').innerText = data.title;
+            document.getElementById('drawerArtist').innerText = data.artist;
+            document.getElementById('drawerDate').innerText = data.date;
+            document.getElementById('drawerMedium').innerText = data.medium;
+            document.getElementById('drawerImg').src = data.image;
+
+            // 3. Trigger the CSS animations
+            drawer.classList.add('active');
+            backdrop.classList.add('active');
+            body.style.overflow = 'hidden'; // Prevents scrolling the background
+        }
+
+        function closeDrawer() {
+            // 1. Remove the active classes
+            drawer.classList.remove('active');
+            backdrop.classList.remove('active');
+            body.style.overflow = ''; // Restores scrolling
+        }
+
+        // Close drawer if user presses the Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeDrawer();
+        });
+    </script>
+</body>
+</html>

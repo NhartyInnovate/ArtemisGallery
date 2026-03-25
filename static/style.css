@@ -1,0 +1,298 @@
+:root {
+    --bg-deep: #050812;
+    --bg-card: #0a0e17;
+    --gold: #d4af37;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+}
+
+body {
+    background-color: var(--bg-deep);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 5rem 1rem 3rem;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    margin-bottom: 2rem;
+    background: radial-gradient(ellipse at top, rgba(212,175,55,0.05) 0%, transparent 70%);
+}
+.hero h1 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 3.5rem;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+.hero p {
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+/* THE MASONRY GRID MAGIC */
+.masonry-container {
+    padding: 0 2rem 4rem;
+    max-width: 1600px;
+    margin: 0 auto;
+
+    /* This tells the browser to split the container into columns */
+    column-count: 1;
+    column-gap: 1.5rem;
+}
+
+/* Responsive Columns */
+@media (min-width: 600px) { .masonry-container { column-count: 2; } }
+@media (min-width: 900px) { .masonry-container { column-count: 3; } }
+@media (min-width: 1300px) { .masonry-container { column-count: 4; } }
+
+/* The Art Cards */
+.art-card {
+    background-color: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    margin-bottom: 1.5rem; /* Vertical spacing between cards */
+
+    /* CRITICAL: This stops a card from being cut in half across two columns! */
+    break-inside: avoid;
+
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+}
+
+.art-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.15);
+    border-color: rgba(212, 175, 55, 0.4);
+}
+
+.art-img {
+    width: 100%;
+    display: block; /* Removes weird whitespace under images */
+    border-bottom: 2px solid var(--gold);
+}
+
+.art-info {
+    padding: 1.25rem;
+}
+
+.art-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    margin: 0 0 0.4rem 0;
+    color: #fff;
+    line-height: 1.3;
+}
+
+.art-artist {
+    font-size: 0.85rem;
+    color: var(--gold);
+    margin: 0 0 0.8rem 0;
+    font-weight: 500;
+}
+
+.art-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Search & Filter Form */
+.search-section {
+    max-width: 900px;
+    margin: -2rem auto 3rem; /* Pulls it up slightly over the hero border */
+    padding: 0 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+.glass-form {
+    display: flex;
+    gap: 1rem;
+    background: rgba(15, 20, 35, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.premium-input, .premium-select {
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.premium-input:focus, .premium-select:focus {
+    outline: none;
+    border-color: var(--gold);
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.premium-select option { background-color: var(--bg-deep); }
+
+.premium-btn {
+    background: linear-gradient(135deg, #d4af37 0%, #997a15 100%);
+    color: #000;
+    border: none;
+    padding: 0 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.premium-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+}
+
+/* Mobile Stacking */
+@media (max-width: 768px) {
+    .glass-form { flex-direction: column; }
+    .premium-btn { padding: 1rem; }
+}
+
+/* Pagination UI */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 0 5rem;
+}
+
+.page-indicator {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+/* Make sure our buttons look like links */
+a.premium-btn {
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.8rem 2rem;
+}
+
+/* Disabled state for buttons */
+.premium-btn.disabled {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+    box-shadow: none;
+}
+
+/* ==========================================
+   DRAWER STYLES & ANIMATIONS
+=========================================== */
+.drawer-backdrop {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 1040;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.drawer-backdrop.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.detail-drawer {
+    position: fixed;
+    top: 0; right: 0;
+    width: 100%; max-width: 450px; height: 100vh;
+    background: rgba(10, 14, 23, 0.95);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(212, 175, 55, 0.2);
+    z-index: 1050;
+    box-shadow: -10px 0 40px rgba(0,0,0,0.8);
+
+    /* Hides it off the right side of the screen */
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    overflow-y: auto;
+}
+
+.detail-drawer.active {
+    /* Slides it back into view */
+    transform: translateX(0);
+}
+
+.close-btn {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: var(--gold);
+    color: #000;
+    transform: rotate(90deg);
+}
+
+.drawer-hero-img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-bottom: 2px solid var(--gold);
+}
+
+.drawer-body {
+    padding: 2rem;
+}
+
+.meta-row {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.meta-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+}
+
+.meta-value {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-main);
+    line-height: 1.4;
+}
