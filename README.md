@@ -48,7 +48,7 @@ To run this project locally on your machine:
 ## Clone the repository:
 
 Bash
-git clone [https://github.com/YOUR-USERNAME/artemis-gallery.git](https://github.com/NhartyInnovate/artemis-gallery.git)
+git clone https://github.com/NhartyInnovate/artemis-gallery.git
 cd artemis-gallery
 ## Create a virtual environment (Recommended):
 
@@ -63,9 +63,19 @@ Install the required dependencies:
 
 Bash
 pip install Flask requests
+
+
 Run the Flask server:
 
 Bash
 python app.py
 Explore the Archive:
 Open your web browser and navigate to http://127.0.0.1:5000
+
+
+
+
+
+## 🌐 Live Demo
+
+[🚀 View Live App](https://artemis-gallery.vercel.app/)
