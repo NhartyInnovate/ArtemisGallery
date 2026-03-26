@@ -56,7 +56,7 @@ def gallery():
             })
 
     # 5. Pass the page variables back to Jinja
-    return render_template("gallery.html",
+    return render_template("index.html",
                            artworks=artworks,
                            search_query=search_query,
                            selected_type=art_type,
